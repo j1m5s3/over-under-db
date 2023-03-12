@@ -3,6 +3,7 @@ from dotenv import dotenv_values, find_dotenv
 
 config = dotenv_values(dotenv_path=find_dotenv())
 
+
 class CoinMarketCap:
     def __init__(self, api_key):
         self.api_key = api_key

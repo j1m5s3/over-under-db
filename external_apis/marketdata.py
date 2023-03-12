@@ -2,8 +2,13 @@ import requests
 
 
 class MarketData:
-    def __init__(self,):
+    def __init__(self, api_key):
+        self.api_key = api_key
         self.base_url = 'https://api.cryptowat.ch/'
+
+        self.headers = {
+            'X-CW-API-Key': self.api_key,
+        }
 
     def get_live_price(self, exchange, pair):
         """
@@ -16,8 +21,9 @@ class MarketData:
         request_url = self.base_url + 'markets' + '/' + exchange + '/' + pair + '/price'
 
         try:
-            response = requests.get(request_url)
+            response = requests.get(request_url, headers=self.headers)
             data = response.json()
-            return data
+            price = data['result']
+            return price
         except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
             print(e)

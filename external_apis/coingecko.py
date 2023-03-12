@@ -52,6 +52,7 @@ class CoinGecko:
         try:
             response = requests.get(request_url, params=params)
             data = response.json()
-            return data
+            result = data[coin_id]
+            return result
         except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
             print(e)
