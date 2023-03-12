@@ -33,3 +33,25 @@ class CoinGecko:
             return data
         except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
             print(e)
+
+    def get_live_price(self, coin_id, vs_currency):
+        """
+        Get live price
+        :param coin_id: bitcoin, ethereum, etc
+        :param vs_currency: usd, eur, etc
+        :return:
+        """
+
+        request_url = self.base_url + 'simple/price'
+
+        params = {
+            'ids': coin_id,
+            'vs_currencies': vs_currency
+        }
+
+        try:
+            response = requests.get(request_url, params=params)
+            data = response.json()
+            return data
+        except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
+            print(e)

@@ -31,3 +31,15 @@ def convert_datetime_to_unix_timestamp(date_time):
 
 def convert_date_string_to_unix_timestamp(date_string):
     return convert_datetime_to_unix_timestamp(convert_to_datetime(date_string))
+
+
+def convert_unix_timestamp_to_datetime(timestamp):
+    return datetime.fromtimestamp(timestamp)
+
+
+def convert_unix_timestamp_to_date_iso(timestamp):
+    return convert_unix_timestamp_to_datetime(timestamp).date().isoformat()
+
+
+def convert_datetime_now_to_unix_timestamp():
+    return int(datetime.now().timestamp())
