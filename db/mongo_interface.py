@@ -11,7 +11,7 @@ class MongoInterface:
         self.db = self.client[db_name]
 
     def insert(self, collection, document):
-        self.db[collection].insert_one(document)
+        return self.db[collection].insert_one(document)
 
     def find(self, collection, query):
         return self.db[collection].find(query)
@@ -20,16 +20,16 @@ class MongoInterface:
         return self.db[collection].find_one(query)
 
     def update(self, collection, query, document):
-        self.db[collection].update_one(query, document)
+        return self.db[collection].update_one(query, document)
 
     def delete(self, collection, query):
-        self.db[collection].delete_one(query)
+        return self.db[collection].delete_one(query)
 
     def delete_many(self, collection, query):
-        self.db[collection].delete_many(query)
+        return self.db[collection].delete_many(query)
 
     def drop(self, collection):
-        self.db[collection].drop()
+        return self.db[collection].drop()
 
     def get_all(self, collection):
         return self.db[collection].find()

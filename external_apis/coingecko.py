@@ -1,4 +1,5 @@
 import requests
+from typing import Dict, Optional, List
 from dotenv import dotenv_values, find_dotenv
 
 config = dotenv_values(dotenv_path=find_dotenv())
@@ -6,10 +7,14 @@ config = dotenv_values(dotenv_path=find_dotenv())
 
 class CoinGecko:
     def __init__(self, api_key=None):
+        # No API key required
         self.api_key = api_key
-        self.base_url = 'https://api.coingecko.com/api/v3/'
+        self.base_url: str = 'https://api.coingecko.com/api/v3/'
 
-    def get_market_chart_range(self, coin_id, vs_currency, from_timestamp_unix, to_timestamp_unix):
+    def get_market_chart_range(self, coin_id: str,
+                               vs_currency: str,
+                               from_timestamp_unix: int, to_timestamp_unix: int
+                               ) -> Optional[Dict]:
         """
         Get market chart range
         :param coin_id: bitcoin, ethereum, etc
@@ -34,7 +39,7 @@ class CoinGecko:
         except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
             print(e)
 
-    def get_live_price(self, coin_id, vs_currency):
+    def get_live_price(self, coin_id: str, vs_currency: str) -> Optional[Dict]:
         """
         Get live price
         :param coin_id: bitcoin, ethereum, etc
@@ -52,6 +57,10 @@ class CoinGecko:
         try:
             response = requests.get(request_url, params=params)
             data = response.json()
+            print("coingecko response: ", data)
+
+            if coin_id not in data.keys():
+                return None
             result = data[coin_id]
             return result
         except (ConnectionError, requests.Timeout, requests.TooManyRedirects) as e:
